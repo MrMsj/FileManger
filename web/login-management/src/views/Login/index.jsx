@@ -64,7 +64,7 @@ const View= () =>{
   }
 
   const gotoRegister=()=>{
-    navigateTo("./Register.jsx");
+    navigateTo("/register");
   }
 
   // 点击验证码图片盒子的事件函数

@@ -3,7 +3,7 @@ import { Input,Space,Button,message, Divider } from 'antd';
 import { useEffect , useState} from "react"
 import initLoginBg from "./init"
 import './login.less'
-import {CaptchaAPI,LoginAPI,RegisterAPI} from "@/request/api"
+import {RegisterAPI} from "@/request/api"
 import { useNavigate } from "react-router-dom"
 
 const View= () =>{
@@ -12,7 +12,6 @@ const View= () =>{
   useEffect(()=>{
     initLoginBg();
     window.onresize = function(){initLoginBg()};
-    getCaptchaImg();
   },[]);
 
   // 获取用户输入的信息
@@ -65,13 +64,6 @@ const View= () =>{
               <Space direction="vertical" size="large" style={{ display: 'flex' }}>
                 <Input placeholder="用户名" onChange={usernameChange}/>
                 <Input.Password placeholder="密码" onChange={passwordChange}/>
-                {/* 验证码盒子 */}
-                <div className="captchaBox">
-                  <Input placeholder="验证码" onChange={captchaChange}/>
-                  <div className="captchaImg" onClick={getCaptchaImg} >
-                    <img height="38" src={captchaImg} alt="" />
-                  </div>
-                </div>
                 <Divider style={{borderColor:"#1890ff",color:"#1890ff"}} />
                 <div style={{display:"flex",justifyContent:"center"}}>
                   <Space size={100}>

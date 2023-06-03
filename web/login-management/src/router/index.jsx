@@ -4,6 +4,7 @@ import {Navigate} from "react-router-dom"
 //import About from "../views/About"
 //import User from "../views/User"
 import Login from "../views/Login"
+import Register from "../views/Login/Register"
 const About =lazy(()=>import("../views/About"))
 const User =lazy(()=>import("../views/User"))
 
@@ -55,11 +56,15 @@ const routes=[
         element: <Login />
 
     },
+    {
+        path:"/register",
+        element: <Register />
+    },
     //访问其他路径的时候直接跳转到首页
     {
         path:"*",
         element:<Navigate to="/page1"/>
-    }
+    },
 
     // {
     //     path:"/home",
