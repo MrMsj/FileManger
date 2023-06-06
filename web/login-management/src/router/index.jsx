@@ -11,6 +11,8 @@ const User =lazy(()=>import("../views/User"))
 const Page1 =lazy(()=>import("../views/Page1"))
 const Page2 =lazy(()=>import("../views/Page2"))
 const Page301 =lazy(()=>import("../views/Page301"))
+const PageUpLoad=lazy(()=>import("../views/UpLoad"))
+
 //懒加载模式需要我们给他添加一个Loading组件
 
 /*const withLoadingComponent=(comp:JSX.Element)=>(
@@ -47,6 +49,11 @@ const routes=[
             {
                 path:"/page3/page301",
                 element: withLoadingComponent(<Page301/>)
+
+            },
+            {
+                path:"/page5",
+                element: withLoadingComponent(<PageUpLoad/>)
 
             }
         ]

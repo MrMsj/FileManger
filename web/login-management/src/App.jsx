@@ -43,9 +43,9 @@ function BeforeRouterEnter(){
       return <ToPage1 />
     }
     //2、如果访问的不是登录页面，并且没有token， 跳转到登录页
-    if(location.pathname!=="/login" && !token && location.pathname!=="/register"){
-      return <ToLogin />
-    }
+    // if(location.pathname!=="/login" && !token && location.pathname!=="/register"){
+    //   return <ToLogin />
+    // }
 
     return outlet
 }
