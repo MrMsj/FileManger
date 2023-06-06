@@ -1,0 +1,14 @@
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 设置容器的高度，以便垂直居中 */
+  }
+
+  
+.small-dragger {
+    width: 500px; /* 设置组件的宽度 */
+    height: 300px; /* 设置组件的高度 */
+    font-size: 20px; /* 设置组件内文字的字体大小 */
+  }
+  
