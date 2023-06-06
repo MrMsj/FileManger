@@ -52,7 +52,6 @@ const View = () => {
             lineHeight:"48px",
           }}
         >
-          Ant Design ©2023 Created by Ant UED
         </Footer>
       </Layout>
     </Layout>

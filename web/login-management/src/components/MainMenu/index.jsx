@@ -71,7 +71,7 @@ const items=[
         ]
     },
     {
-        label:'栏目5',
+        label:'上传文件',
         key:'/page5',
         icon: <FileOutlined />
     },
