@@ -3,7 +3,7 @@ import { Input,Space,Button,message, Divider } from 'antd';
 import { useEffect , useState} from "react"
 import initLoginBg from "./init"
 import './login.less'
-import {CaptchaAPI,LoginAPI,RegisterAPI} from "@/request/api"
+import {LoginAPI,RegisterAPI} from "@/request/api"
 import { useNavigate } from "react-router-dom"
 
 const View= () =>{
@@ -12,15 +12,12 @@ const View= () =>{
   useEffect(()=>{
     initLoginBg();
     window.onresize = function(){initLoginBg()};
-    getCaptchaImg();
   },[]);
 
   // 获取用户输入的信息
   const [usernameVal,setUsernameVal] = useState(""); // 定义用户输入用户名这个变量
   const [passwordVal,setPasswordVal] = useState(""); // 定义用户输入密码这个变量
-  const [captchaVal,setCaptchaVal] = useState(""); // 定义用户输入验证码这个变量
   // 定义一个变量保存验证码图片信息
-  const [captchaImg,setCaptchaImg] = useState(""); 
 
   const usernameChange = (e)=>{
     // 获取用户输入的用户名
@@ -31,23 +28,19 @@ const View= () =>{
   const passwordChange = (e)=>{
     setPasswordVal(e.target.value);
   }
-  const captchaChange = (e)=>{
-    setCaptchaVal(e.target.value);
-  }
 
   // 点击登录按钮的事件函数
   const gotoLogin = async ()=>{
-    console.log("用户输入的用户名，密码，验证码分别是：",usernameVal,passwordVal,captchaVal);
+    console.log("用户输入的用户名，密码，验证码分别是：",usernameVal,passwordVal);
     // 验证是否有空值
-    if(!usernameVal.trim() || !passwordVal.trim()|| !captchaVal.trim()){
+    if(!usernameVal.trim() || !passwordVal.trim()){
       message.warning("请完整输入信息！")
       return
     }
     // 发起登录请求
     let loginAPIRes = await LoginAPI({
       username:usernameVal,
-      password:passwordVal,
-      code:captchaVal,   
+      password:passwordVal, 
       uuid:localStorage.getItem("uuid")})
 
       console.log(loginAPIRes);
@@ -67,21 +60,6 @@ const View= () =>{
     navigateTo("/register");
   }
 
-  // 点击验证码图片盒子的事件函数
-  const getCaptchaImg = async ()=>{
-    // 做验证码的请求
-    // CaptchaAPI().then((res)=>{
-    //   console.log(res);
-    // })
-    let captchaAPIRes = await CaptchaAPI();
-    console.log(captchaAPIRes);  
-    if(captchaAPIRes.code===200){
-      // 1、把图片数据显示在img上面
-      setCaptchaImg("data:image/gif;base64,"+captchaAPIRes.img)
-      // 2、本地保存uuid，给登录的时候用
-      localStorage.setItem("uuid",captchaAPIRes.uuid)
-    }
-  }
 
     return(
         <div className={styles.loginPage} >
@@ -100,13 +78,7 @@ const View= () =>{
               <Space direction="vertical" size="large" style={{ display: 'flex' }}>
                 <Input placeholder="用户名" onChange={usernameChange}/>
                 <Input.Password placeholder="密码" onChange={passwordChange}/>
-                {/* 验证码盒子 */}
-                <div className="captchaBox">
-                  <Input placeholder="验证码" onChange={captchaChange}/>
-                  <div className="captchaImg" onClick={getCaptchaImg} >
-                    <img height="38" src={captchaImg} alt="" />
-                  </div>
-                </div>
+
                 <Divider style={{borderColor:"#1890ff",color:"#1890ff"}} />
                 <div style={{display:"flex",justifyContent:"center"}}>
                   <Space size={100}>
