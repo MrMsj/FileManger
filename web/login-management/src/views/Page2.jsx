@@ -2,6 +2,7 @@ import { Button, Space, Table } from 'antd';
 import { FileTextOutlined, FolderOpenOutlined } from '@ant-design/icons';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const columns = [
   {
@@ -24,6 +25,7 @@ const App = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [cinemaList, setCinemaList] = useState([]);
+  let navigateto = useNavigate();
 
   const deleteFiles = () => {
     setLoading(true);
@@ -33,6 +35,10 @@ const App = () => {
       setLoading(false);
     }, 1000);
   };
+
+  const uploadFile=()=>{
+    navigateto("/page5");
+  }
 
   const onSelectChange = (selectedRowKeys) => {
     console.log('selectedRowKeys changed:', selectedRowKeys);
@@ -74,26 +80,28 @@ const App = () => {
     <div>
       <div style={{ background: '#acc4ea', padding: '16px', marginBottom: '16px' }}>
         <Space wrap>
-          <Button type="primary" ghost>
+          <Button onClick={uploadFile} type="primary" ghost>
             上传文件
           </Button>
           
           <Button type="dashed" ghost>
            新建文件夹
           </Button>
+
+          <div >
+            <Button onClick={deleteFiles} disabled={!hasSelected} loading={loading}>
+              删除文件
+            </Button>
+            <span style={{ marginLeft: '8px' }}>
+              {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
+            </span>
+          </div>
           
           <FileTextOutlined />
           <FolderOpenOutlined />
         </Space>
       </div>
-      <div style={{ marginBottom: '16px' }}>
-        <Button onClick={deleteFiles} disabled={!hasSelected} loading={loading}>
-          删除文件
-        </Button>
-        <span style={{ marginLeft: '8px' }}>
-          {hasSelected ? `Selected ${selectedRowKeys.length} items` : ''}
-        </span>
-      </div>
+
       <Table
         rowSelection={rowSelection}
         columns={columns}
