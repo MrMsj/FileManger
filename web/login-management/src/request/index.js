@@ -5,7 +5,7 @@ const instance = axios.create({
     // 基本请求路径的抽取
     baseURL:"http://localhost:3000/",
     // 这个时间是你每次请求的过期时间，这次请求认为20秒之后这个请求就是失败的
-    timeout:200
+    timeout:2000
 })
 
 // 请求拦截器

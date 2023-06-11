@@ -1,11 +1,14 @@
 import { useSelector,useDispatch} from "react-redux"
 import numStatus from "@/store/NumStatus"
+import axios from "axios";
 const View= () =>{
     const {num, sarr}=useSelector((state)=>({
         num:state.handleNum.num,
         sarr:state.handleArr.sarr
     }))
     const dispatch = useDispatch();
+
+    let token = localStorage.getItem("login-react-management-token");
 
     // 通过useDispatch修改仓库数据
     const changeNum = () =>{
@@ -39,6 +42,36 @@ const View= () =>{
   const changeArr = () =>{
     dispatch({type:"sarrpush",val:100}) 
   }
+  const sendRequest = async () => {
+    const url = 'http://localhost:3000/api/v1/folders/3';
+    const data = {
+      folder: {
+        name: 'BBA',
+        path: '/3/Test',
+        user_id: 3
+      },
+      user: {
+        id: 3
+      }
+    };
+    const config = {
+      headers: {
+
+        'Authorization': 'Bearer '+token,
+      }
+    };
+
+    try {
+      const response = await axios.get(url,  config);
+      console.log(response.data);
+      // 处理响应数据
+    } catch (error) {
+      console.error(error);
+      // 处理错误情况
+    }
+  };
+
+
 
     return(
         <div className='home'>
@@ -48,6 +81,7 @@ const View= () =>{
             <button onClick={changeNum2}>异步按钮</button>
             <p>{sarr}</p>
             <button onClick={changeArr}>同步按钮</button>
+            <button onClick={sendRequest}>按钮</button>
         </div>
     )
 }

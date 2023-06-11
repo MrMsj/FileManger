@@ -21,6 +21,65 @@ const columns = [
   },
 ];
 
+const data = {
+  "folder": {
+    "ID": 2,
+    "CreatedAt": "2023-06-07T19:43:56.515+08:00",
+    "UpdatedAt": "2023-06-07T19:43:56.515+08:00",
+    "DeletedAt": null,
+    "name": "Nested",
+    "path": "/Root/Nested",
+    "size": 0,
+    "user_id": 7,
+    "parent_id": 1,
+    "Children": [],
+    "Files": [
+      {
+        "ID": 1,
+        "CreatedAt": "2023-06-07T19:43:56.521+08:00",
+        "UpdatedAt": "2023-06-07T19:43:56.521+08:00",
+        "DeletedAt": null,
+        "filename": "testfile.txt",
+        "path": "/Root/Nested/testfile.txt",
+        "size": 1024,
+        "user_id": 7,
+        "folder_id": 2
+      }
+    ]
+  },
+  "status": 0
+};
+
+const folder = data.folder;
+const files = folder.Files;
+
+const nestedColumns = columns.map((column) => ({
+  ...column,
+  render: (text, record) => {
+    if (column.key === 'name' && record.filename) {
+      return <a href={record.path}>{record.filename}</a>;
+    } else if (column.key === 'mtime' && record.UpdatedAt) {
+      return record.UpdatedAt; // 如果需要，可以修改属性名
+    }
+    return text;
+  },
+}));
+
+const renderedColumns = [
+  ...nestedColumns,
+  {
+    title: '操作',
+    key: 'action',
+    render: (_, record) => (
+      <Button type="link" onClick={() => console.log('Delete', record)}>
+        删除
+      </Button>
+    ),
+  },
+];
+
+console.log(renderedColumns);
+
 const App = () => {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);

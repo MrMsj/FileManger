@@ -6,7 +6,7 @@ import request from "./index"
 // export const CaptchaAPI = () =>request.get("/prod-api/captchaImage");
 
 // 登录请求
-export const LoginAPI = (params) =>request.post("/api/v1/login",params);
+export const LoginAPI = (params) =>request.post("/api/v1/auth/login",params);
 
 // 注册请求
 export const RegisterAPI = (params)=>request.post("/api/v1/users",params);

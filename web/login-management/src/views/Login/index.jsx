@@ -1,6 +1,7 @@
+import { AuthContext, AuthProvider } from "./AuthContext"
+import React, { useContext, useEffect , useState } from "react";
 import styles from "./login.module.scss"
 import { Input,Space,Button,message, Divider } from 'antd';
-import { useEffect , useState} from "react"
 import initLoginBg from "./init"
 import './login.less'
 import {LoginAPI,RegisterAPI} from "@/request/api"
@@ -40,15 +41,16 @@ const View= () =>{
     // 发起登录请求
     let loginAPIRes = await LoginAPI({
       username:usernameVal,
-      password:passwordVal, 
-      uuid:localStorage.getItem("uuid")})
+      password:passwordVal,
+      uuid:localStorage.getItem("uuid")});
+      localStorage.setItem("myloginAPIRes", JSON.stringify(loginAPIRes));//获取token等数据
 
       console.log(loginAPIRes);
-      if(loginAPIRes.code===200){
+      if(loginAPIRes.token){
         // 1、提示登录成功
         message.success("登录成功！")
         // 2、保存token
-        localStorage.setItem("lege-react-management-token",loginAPIRes.token)
+        localStorage.setItem("login-react-management-token",loginAPIRes.token)
         // 3、跳转到/page1
         navigateTo("/page1")
         // 4、删除本地保存中的uuid
@@ -62,6 +64,7 @@ const View= () =>{
 
 
     return(
+      <AuthProvider>
         <div className={styles.loginPage} >
           {/*存放背景*/}  
           <canvas id="canvas" style={{display:"block"}}></canvas>
@@ -90,6 +93,7 @@ const View= () =>{
               </div>
           </div>
         </div>
+      </AuthProvider>
     )
 }
 
